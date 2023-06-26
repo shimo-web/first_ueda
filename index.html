@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双月 お好み焼き鉄板焼き</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="head_container">
+        <div class="head_item">
+          <h1>双月 菅原店</h1>
+        </div>
+        <div class="head_item">
+          <ul>
+            <li><a href="#">店内メニュー</a></li>
+            <li><a href="#">通販</a></li>
+            <li><a href="#">会社概要</a></li>
+          </ul>
+        </div>
+      </div>
+      <h2>
+        地元民に愛される人気店 漢気あふれる大将の作るお好み焼きが絶品です！
+      </h2>
+    </header>
+    <nav>
+      <ul>
+        <li><a href="#">菅原本店</a></li>
+        <li><a href="#">淡路店</a></li>
+        <li><a href="#">北浜店</a></li>
+        <li class="last_child"><a href="#">沖縄店</a></li>
+      </ul>
+    </nav>
+    <div class="container">
+      <div class="item01">
+        <main>
+          <h2>定番メニューねぎ焼き</h2>
+          <img src="img/213749.jpg" alt="ねぎ焼きの画像" />
+          <p>焼き方にこだわったオリジナル製法</p>
+        </main>
+        <article>
+          <h2>おすすめのメニュー</h2>
+          <div class="article_container">
+            <div class="ariticl_item">
+              <img src="img/213748.jpg" alt="サイコロステーキの画像" />
+              <p>サイコロステーキ</p>
+            </div>
+            <div class="ariticl_item">
+              <img src="img/213747.jpg" alt="焼きそばの画像" />
+              <p>焼きそば</p>
+            </div>
+          </div>
+        </article>
+      </div>
+      <div class="item02">
+        <aside>
+          <h2>サイトコンテンツ</h2>
+          <ul>
+            <li>常連石原の閉店コース</li>
+            <li>乾杯の黒霧島</li>
+            <li>枝豆</li>
+            <li>野菜炒め</li>
+            <li>サイコロステーキ</li>
+            <li>お好み焼き</li>
+            <li>ねぎ焼き</li>
+            <li>焼きそば</li>
+            <li>黒霧ロック</li>
+            <li>はいはい</li>
+          </ul>
+        </aside>
+      </div>
+    </div>
+    <footer>
+        <h2>てか今日柳の誕生日やん笑</h2>
+        <h2>おまけ</h2>
+    <p id="time">00:00:00.00</p>
+    <button onclick="start()" id="startButton">スタート</button>
+    <button onclick="stop()" id="stopButton" disabled>ストップ</button>
+    <button onclick="reset()" id="resetButton" disabled>リセット</button>
+
+    <script>
+      var startTime; // ストップウォッチの開始時間
+      var timer; // タイマー
+      var isRunning = false; // ストップウォッチが実行中かどうかのフラグ
+
+      // ストップウォッチを開始する関数
+      function start() {
+        if (!isRunning) {
+          startTime = Date.now();
+          timer = setInterval(updateTime, 10);
+          isRunning = true;
+          document.getElementById("startButton").disabled = true;
+          document.getElementById("stopButton").disabled = false;
+          document.getElementById("resetButton").disabled = true;
+        }
+      }
+
+      // ストップウォッチを停止する関数
+      function stop() {
+        if (isRunning) {
+          clearInterval(timer);
+          isRunning = false;
+          document.getElementById("startButton").disabled = false;
+          document.getElementById("stopButton").disabled = true;
+          document.getElementById("resetButton").disabled = false;
+        }
+      }
+
+      // ストップウォッチをリセットする関数
+      function reset() {
+        if (!isRunning) {
+          clearInterval(timer);
+          document.getElementById("time").textContent = "00:00:00.00";
+          document.getElementById("resetButton").disabled = true;
+          document.getElementById("startButton").disabled = false;
+          document.getElementById("stopButton").disabled = true;
+        }
+      }
+
+      // 時間を更新する関数
+      function updateTime() {
+        var currentTime = Date.now();
+        var elapsedTime = currentTime - startTime;
+        var formattedTime = formatTime(elapsedTime);
+        document.getElementById("time").textContent = formattedTime;
+      }
+
+      // 時間を "HH:MM:SS.ss" 形式にフォーマットする関数
+      function formatTime(time) {
+        var milliseconds = Math.floor((time % 1000) / 10);
+        var seconds = Math.floor((time / 1000) % 60);
+        var minutes = Math.floor((time / (1000 * 60)) % 60);
+        var hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+
+        return (
+          ("0" + hours).slice(-2) +
+          ":" +
+          ("0" + minutes).slice(-2) +
+          ":" +
+          ("0" + seconds).slice(-2) +
+          "." +
+          ("0" + milliseconds).slice(-2)
+        );
+      }
+    </script>
+    </footer>
+  </body>
+</html>

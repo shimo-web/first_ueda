@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>ストップウォッチ</title>
+    <style>
+      body {
+        text-align: center;
+        font-size: 24px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>ストップウォッチ</h1>
+    <p id="time">00:00:00.00</p>
+    <button onclick="start()" id="startButton">スタート</button>
+    <button onclick="stop()" id="stopButton" disabled>ストップ</button>
+    <button onclick="reset()" id="resetButton" disabled>リセット</button>
+
+    <script>
+      var startTime; // ストップウォッチの開始時間
+      var timer; // タイマー
+      var isRunning = false; // ストップウォッチが実行中かどうかのフラグ
+
+      // ストップウォッチを開始する関数
+      function start() {
+        if (!isRunning) {
+          startTime = Date.now();
+          timer = setInterval(updateTime, 10);
+          isRunning = true;
+          document.getElementById("startButton").disabled = true;
+          document.getElementById("stopButton").disabled = false;
+          document.getElementById("resetButton").disabled = true;
+        }
+      }
+
+      // ストップウォッチを停止する関数
+      function stop() {
+        if (isRunning) {
+          clearInterval(timer);
+          isRunning = false;
+          document.getElementById("startButton").disabled = false;
+          document.getElementById("stopButton").disabled = true;
+          document.getElementById("resetButton").disabled = false;
+        }
+      }
+
+      // ストップウォッチをリセットする関数
+      function reset() {
+        if (!isRunning) {
+          clearInterval(timer);
+          document.getElementById("time").textContent = "00:00:00.00";
+          document.getElementById("resetButton").disabled = true;
+          document.getElementById("startButton").disabled = false;
+          document.getElementById("stopButton").disabled = true;
+        }
+      }
+
+      // 時間を更新する関数
+      function updateTime() {
+        var currentTime = Date.now();
+        var elapsedTime = currentTime - startTime;
+        var formattedTime = formatTime(elapsedTime);
+        document.getElementById("time").textContent = formattedTime;
+      }
+
+      // 時間を "HH:MM:SS.ss" 形式にフォーマットする関数
+      function formatTime(time) {
+        var milliseconds = Math.floor((time % 1000) / 10);
+        var seconds = Math.floor((time / 1000) % 60);
+        var minutes = Math.floor((time / (1000 * 60)) % 60);
+        var hours = Math.floor((time / (1000 * 60 * 60)) % 24);
+
+        return (
+          ("0" + hours).slice(-2) +
+          ":" +
+          ("0" + minutes).slice(-2) +
+          ":" +
+          ("0" + seconds).slice(-2) +
+          "." +
+          ("0" + milliseconds).slice(-2)
+        );
+      }
+    </script>
+  </body>
+</html>
